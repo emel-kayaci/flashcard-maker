@@ -19,26 +19,28 @@ const FlashcardList: React.FC<FlashcardListProps> = ({
     <div className="mt-8">
       <div className="flex justify-center">
         <motion.div
-          className="relative w-72 h-40 rounded-lg bg-gray-800 shadow-md"
+          className="relative bg-blue-600 rounded-lg text-white text-lg font-bold p-4 w-auto max-w-72 h-auto shadow-md"
           animate={{ rotateY: isFrontVisible ? 0 : 180 }}
           transition={{ duration: 0.6 }}
           style={{ perspective: '1000px' }}
         >
-          <div className="absolute inset-0 bg-blue-600 rounded-lg flex items-center justify-center text-white text-lg font-bold">
-            {isFrontVisible ? (
-              <div>
-                <div className="text-xs">{currentCard.frontLanguage}</div>
-                <div>{currentCard.front}</div>
+          {isFrontVisible ? (
+            <div className="text-center">
+              <div className="text-xs">{currentCard.frontLanguage}</div>
+              {currentCard.front.split('\n').map((line, index) => (
+                <div key={index}>{line}</div>
+              ))}
+            </div>
+          ) : (
+            <motion.div className="transform" style={{ rotateY: '180deg' }}>
+              <div className="text-center">
+                <div className="text-xs">{currentCard.backLanguage}</div>
+                {currentCard.back.split('\n').map((line, index) => (
+                  <div key={index}>{line}</div>
+                ))}
               </div>
-            ) : (
-              <motion.div className="transform" style={{ rotateY: '180deg' }}>
-                <div>
-                  <div className="text-xs">{currentCard.backLanguage}</div>
-                  <div>{currentCard.back}</div>
-                </div>
-              </motion.div>
-            )}
-          </div>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </div>
