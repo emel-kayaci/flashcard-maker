@@ -7,6 +7,8 @@ import CardButton from './components/CardButton';
 import ThemeToggleButton from './components/ThemeToggleButton';
 import { read, utils } from 'xlsx';
 import { Flashcard } from './interfaces/Flashcard';
+import InformationModal from './components/InformationModal';
+import { FaQuestionCircle } from 'react-icons/fa';
 
 const IndexPage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -17,6 +19,7 @@ const IndexPage = () => {
   const [showFlashcards, setShowFlashcards] = useState<boolean>(false);
   const [isFileSelected, setIsFileSelected] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isInformationOpen, setIsInformationOpen] = useState<boolean>(false);
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = (event.target as HTMLInputElement).files?.[0];
@@ -115,6 +118,10 @@ const IndexPage = () => {
     setIsDarkTheme((prevIsDarkTheme) => !prevIsDarkTheme);
   };
 
+  const handleToggleInformation = () => {
+    setIsInformationOpen((prevIsInformationOpen) => !prevIsInformationOpen);
+  };
+
   return (
     <div
       className={`min-h-screen ${
@@ -122,7 +129,17 @@ const IndexPage = () => {
       } flex items-center justify-center`}
     >
       <div className="flex flex-col items-center px-4">
-        <h1 className="text-2xl font-bold mb-4">Flashcard Maker</h1>
+        <div className="flex items-center mb-8">
+          <h1 className="text-2xl font-bold mr-2">Flashcard Maker</h1>
+          <FaQuestionCircle
+            className="text-blue-600 cursor-pointer"
+            onClick={handleToggleInformation}
+          />
+          <InformationModal
+            isOpen={isInformationOpen}
+            onClose={handleToggleInformation}
+          />
+        </div>
         <div className="mb-4 w-full max-w-md flex flex-col items-center">
           <FileUploader onFileUpload={handleFileUpload} />
           {!isFileSelected && errorMessage && (
