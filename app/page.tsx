@@ -49,6 +49,7 @@ const IndexPage = () => {
               backLanguage: jsonData[0][1],
               front: row[0],
               back: row[1],
+              image: row[2] || undefined, // Read the image from the third column, if present
             }));
 
           setFlashcards(cards);

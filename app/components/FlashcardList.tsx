@@ -39,6 +39,15 @@ const FlashcardList: React.FC<FlashcardListProps> = ({
                   <div key={index}>{line}</div>
                 ))}
               </div>
+              {currentCard.image && (
+                <div className="mt-4">
+                  <img
+                    src={currentCard.image}
+                    alt="Card"
+                    className="w-40 h-auto mx-auto"
+                  />
+                </div>
+              )}
             </motion.div>
           )}
         </motion.div>
