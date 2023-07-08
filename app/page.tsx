@@ -16,14 +16,12 @@ const IndexPage = () => {
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
   const [showFlashcards, setShowFlashcards] = useState<boolean>(false);
   const [isFileSelected, setIsFileSelected] = useState<boolean>(false);
-  const [isLanguageSwapped, setIsLanguageSwapped] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = (event.target as HTMLInputElement).files?.[0];
     setFile(selectedFile || null);
     setIsFileSelected(!!selectedFile);
-    setIsLanguageSwapped(false);
   };
 
   useEffect(() => {
@@ -108,10 +106,9 @@ const IndexPage = () => {
         backLanguage: flashcard.frontLanguage,
         front: flashcard.back,
         back: flashcard.front,
+        image: flashcard.image,
       }))
     );
-
-    setIsLanguageSwapped((prevIsLanguageSwapped) => !prevIsLanguageSwapped);
   };
 
   const handleToggleTheme = () => {
@@ -124,9 +121,9 @@ const IndexPage = () => {
         isDarkTheme ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
       } flex items-center justify-center`}
     >
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center px-4">
         <h1 className="text-2xl font-bold mb-4">Flashcard Maker</h1>
-        <div className="mb-4">
+        <div className="mb-4 w-full max-w-md flex flex-col items-center">
           <FileUploader onFileUpload={handleFileUpload} />
           {!isFileSelected && errorMessage && (
             <div className="mt-2">
@@ -135,7 +132,7 @@ const IndexPage = () => {
           )}
           <div className="mt-2">
             <button
-              className="mt-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow transition-colors duration-300"
+              className="mt-2 w-full px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg shadow transition-colors duration-300"
               onClick={handleGenerateFlashcards}
             >
               Generate Flashcards
@@ -145,11 +142,13 @@ const IndexPage = () => {
 
         {showFlashcards && flashcards.length > 0 && (
           <>
-            <FlashcardList
-              flashcards={flashcards}
-              currentCardIndex={currentCardIndex}
-              isFrontVisible={isFrontVisible}
-            />
+            <div className="w-full max-w-md">
+              <FlashcardList
+                flashcards={flashcards}
+                currentCardIndex={currentCardIndex}
+                isFrontVisible={isFrontVisible}
+              />
+            </div>
 
             <CardButton
               onFlip={handleFlipCard}
@@ -162,7 +161,6 @@ const IndexPage = () => {
             />
           </>
         )}
-
         <ThemeToggleButton
           isDarkTheme={isDarkTheme}
           onToggleTheme={handleToggleTheme}

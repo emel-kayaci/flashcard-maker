@@ -14,12 +14,15 @@ const FlashcardList: React.FC<FlashcardListProps> = ({
   isFrontVisible,
 }) => {
   const currentCard = flashcards[currentCardIndex];
+  const hasImage = currentCard.image;
 
   return (
-    <div className="mt-8">
+    <div className="mt-4">
       <div className="flex justify-center">
         <motion.div
-          className="relative bg-blue-600 rounded-lg text-white text-lg font-bold p-4 w-auto max-w-72 h-auto shadow-md"
+          className={
+            'relative bg-blue-600 rounded-lg text-white text-lg font-bold p-4 w-64 h-64 overflow-hidden shadow-md flex items-center justify-center'
+          }
           animate={{ rotateY: isFrontVisible ? 0 : 180 }}
           transition={{ duration: 0.6 }}
           style={{ perspective: '1000px' }}
@@ -27,24 +30,33 @@ const FlashcardList: React.FC<FlashcardListProps> = ({
           {isFrontVisible ? (
             <div className="text-center">
               <div className="text-xs">{currentCard.frontLanguage}</div>
-              {currentCard.front.split('\n').map((line, index) => (
-                <div key={index}>{line}</div>
-              ))}
+              <div className="flex flex-col h-full justify-center">
+                {currentCard.front.split('\n').map((line, index) => (
+                  <div key={index} className="text-center">
+                    {line}
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
             <motion.div className="transform" style={{ rotateY: '180deg' }}>
               <div className="text-center">
                 <div className="text-xs">{currentCard.backLanguage}</div>
-                {currentCard.back.split('\n').map((line, index) => (
-                  <div key={index}>{line}</div>
-                ))}
+                <div className="flex flex-col h-full justify-center">
+                  {currentCard.back.split('\n').map((line, index) => (
+                    <div key={index} className="text-center">
+                      {line}
+                    </div>
+                  ))}
+                </div>
               </div>
-              {currentCard.image && (
-                <div className="mt-4">
+              {hasImage && (
+                <div className="mt-4 flex justify-center">
                   <img
                     src={currentCard.image}
                     alt="Card"
-                    className="w-40 h-auto mx-auto"
+                    className="max-h-48 max-w-full h-auto rounded shadow-md"
+                    style={{ maxWidth: '100%' }}
                   />
                 </div>
               )}
