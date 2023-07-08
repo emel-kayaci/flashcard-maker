@@ -2,7 +2,7 @@
 
 A flashcard maker mini app that allows users to upload flashcard data from an Excel file and practice with interactive flip cards.
 
-![flashcard-demo](https://github.com/emel-kayaci/flashcard-maker/assets/43893190/1d13f149-5cd6-43cf-80a6-3dc733161ee5)
+![flashcard-demo](https://github.com/emel-kayaci/flashcard-maker/assets/43893190/00e23898-5c1b-4139-914f-c315357feb28)
 
 **Format of the excel files:**
 
