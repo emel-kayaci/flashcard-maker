@@ -41,6 +41,11 @@ const IndexPage = () => {
             header: 1,
           });
 
+          // Find the column index of the image column
+          const imageColumnIndex = jsonData[0].findIndex(
+            (column) => column.toLowerCase() === 'image'
+          );
+
           // Generate flashcards for each row
           const cards: Flashcard[] = jsonData
             .slice(1)
@@ -50,7 +55,8 @@ const IndexPage = () => {
               backLanguage: jsonData[0][1],
               front: row[0],
               back: row[1],
-              image: row[2] || undefined, // Read the image from the third column, if present
+              image:
+                imageColumnIndex !== -1 ? row[imageColumnIndex] : undefined,
             }));
 
           setFlashcards(cards);
